@@ -1,0 +1,4 @@
+#!/bin/bash
+set -exu
+
+venv/bin/flask run --no-debugger
