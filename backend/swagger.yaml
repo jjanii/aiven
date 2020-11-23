@@ -1,0 +1,83 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Aiven Platform List
+  license:
+    name: MIT
+host: localhost:5000
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /clouds:
+    get:
+      summary: List all Aiven's clouds
+      operationId: get_cloud_platforms
+      tags:
+        - clouds
+      responses:
+        "200":
+          description: A array of Aiven's clouds
+          schema:
+            $ref: "#/definitions/CloudResponse"
+        default:
+          description: unexpected error
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  Cloud:
+    type: "object"
+    required:
+      - cloud_name
+      - geo_region
+    properties:
+      cloud_name:
+        type: string
+        maxLength: 256
+      cloud_description:
+        type: string
+      geo_latitude:
+        type: integer
+        format: int64
+      geo_longitude:
+        type: integer
+        format: int64
+      geo_region:
+        type: string
+  Clouds:
+    type: array
+    items:
+      $ref: "#/definitions/Cloud"
+  Error:
+    type: "object"
+    required:
+      - message
+      - status
+    properties:
+      status:
+        type: integer
+        format: int32
+      message:
+        type: string
+      more_info:
+        type: string
+  Errors:
+    type: array
+    items:
+      $ref: "#/definitions/Error"
+  CloudResponse:
+    type: "object"
+    required:
+      - clouds
+    properties:
+      clouds:
+        type: object
+        $ref: "#/definitions/Clouds"
+      errors:
+        type: object
+        $ref: "#/definitions/Errors"
+      message:
+        type: string

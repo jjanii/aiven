@@ -1,15 +1,19 @@
 import http.client
-from flask import Flask, jsonify
+from flask import Flask
 from flask_caching import Cache
-from flask_swagger import swagger
+from flask_cors import CORS, cross_origin
 
 cache = Cache(config={'CACHE_TYPE': 'simple'})
 app = Flask(__name__)
+
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 cache.init_app(app)
 
 
 @app.route('/clouds')
+@cross_origin()
 @cache.cached(timeout=60)
 def get_cloud_platforms():
     conn = http.client.HTTPSConnection("api.aiven.io")
@@ -20,8 +24,3 @@ def get_cloud_platforms():
     data = res.read()
 
     return data
-
-
-@app.route("/spec")
-def spec():
-    return jsonify(swagger(app))
