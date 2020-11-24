@@ -9,7 +9,7 @@ const TableHeader = (props: {
     <thead>
       <tr>
         {props.headers.map(entry => (
-          <StyledTh onClick={() => props.sortBy(entry.value)}>
+          <StyledTh key={entry.label} onClick={() => props.sortBy(entry.value)}>
             {entry.label}
           </StyledTh>
         ))}

@@ -5,10 +5,11 @@ const TableRow = (props: { data: Array<Cloud> }) => {
   return (
     <tbody>
       {props.data.map(entry => (
-        <tr>
+        <tr key={entry.cloudName}>
           <td>{entry.cloudName}</td>
           <td>{entry.cloudDescription}</td>
           <td>{capitalize(entry.geoRegion)}</td>
+          <td>{entry.distance}</td>
         </tr>
       ))}
     </tbody>

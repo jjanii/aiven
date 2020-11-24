@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Cloud } from "../../api/models";
 import Table from "react-bootstrap/Table";
 
@@ -6,8 +6,17 @@ import TableRow from "./TableRow";
 import TableHeader from "./TableHeader";
 
 import orderBy from "lodash/orderBy";
+import isEqual from "lodash/isEqual";
 
 const CloudTable = (props: { data: Array<Cloud> }) => {
+  const usePrevious = <T extends unknown>(value: T): T | undefined => {
+    const ref = useRef<T>();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  };
+
   const [orderState, setOrderState] = useState<{
     name: string;
     order?: string;
@@ -15,9 +24,17 @@ const CloudTable = (props: { data: Array<Cloud> }) => {
     name: "",
     order: undefined
   });
-  const [orderedData, setOrderedData] = useState<Array<Cloud> | undefined>(
-    undefined
-  );
+
+  const [orderedData, setOrderedData] = useState<Array<Cloud>>(props.data);
+
+  const prevData = usePrevious(props.data);
+  useEffect(() => {
+    if (!isEqual(prevData, props.data)) {
+      setOrderedData(props.data);
+      setOrderState({ name: "", order: undefined });
+    }
+  }, [props.data]);
+
   const { data } = props;
   const sortBy = (name: string) => {
     const order =
@@ -33,7 +50,7 @@ const CloudTable = (props: { data: Array<Cloud> }) => {
       const sorted = orderBy(data, name, order);
       setOrderedData(sorted);
     } else {
-      setOrderedData(undefined);
+      setOrderedData(props.data);
     }
     setOrderState({ name, order });
   };
@@ -44,11 +61,12 @@ const CloudTable = (props: { data: Array<Cloud> }) => {
         headers={[
           { label: "Cloud name", value: "cloudName" },
           { label: "Cloud Description", value: "cloudDescription" },
-          { label: "Region", value: "geoRegion" }
+          { label: "Region", value: "geoRegion" },
+          { label: "Distance (km)", value: "distance" }
         ]}
         sortBy={sortBy}
       />
-      <TableRow data={orderedData || data} />
+      <TableRow data={orderedData} />
     </Table>
   );
 };
