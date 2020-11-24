@@ -3,12 +3,6 @@ import { Cloud } from "../api/models";
 let latitude: number = 0;
 let longitude: number = 0;
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(setPosition);
-  }
-}
-
 export function calculateDistances(
   data: Array<Cloud>,
   coords: { latitude: number; longitude: number }
@@ -52,12 +46,4 @@ function distance(lat1: number, lon1: number, lat2: number, lon2: number) {
 
     return Math.round(dist);
   }
-}
-
-function setPosition(position: {
-  coords: { latitude: number; longitude: number };
-}) {
-  console.log("jee", position);
-  latitude = position.coords.latitude;
-  longitude = position.coords.longitude;
 }

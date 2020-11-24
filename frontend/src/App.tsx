@@ -7,29 +7,39 @@ import { calculateDistances } from "./helpers/location";
 
 function App() {
   const [platforms, setPlatforms] = useState<Array<Cloud>>([]);
-  let coords: { latitude: number; longitude: number } = {
-    latitude: 0,
-    longitude: 0
-  };
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        coords = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-      });
-    } else {
-      alert(
-        "It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it."
-      );
-    }
+  const [coords, setCoords] = useState<{ latitude: number; longitude: number }>(
+    {
+      latitude: 0,
+      longitude: 0,
+    },
+  );
 
-    const api = new CloudsApi();
-    api.getCloudPlatforms().then(data => {
-      const platformsWithDistances = calculateDistances(data.clouds, coords);
-      setPlatforms(platformsWithDistances);
+  const setPosition = (position: {
+    coords: { latitude: number; longitude: number };
+  }) => {
+    setCoords({
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
     });
+  };
+
+  useEffect(() => {
+    const platformsWithDistances = calculateDistances(platforms, coords);
+    setPlatforms(platformsWithDistances);
+  }, [coords]);
+
+  useEffect(() => {
+    const api = new CloudsApi();
+    api
+      .getCloudPlatforms()
+      .then((data) => {
+        setPlatforms(data.clouds);
+      })
+      .then(() => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(setPosition, console.log);
+        } // handle case where geolocation is disabled
+      });
   }, []);
 
   return (
