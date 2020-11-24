@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { CloudsApi } from "./api/index";
-import "./App.css";
-import { Cloud } from "./api/models";
 import CloudGrid from "./CloudGrid";
+
+import "./App.css";
+
 import { calculateDistances } from "./helpers/location";
+
+import { Cloud } from "./api/models";
+import type { Coords } from "./helpers/location";
 
 function App() {
   const [platforms, setPlatforms] = useState<Array<Cloud>>([]);
-  const [coords, setCoords] = useState<{ latitude: number; longitude: number }>(
-    {
-      latitude: 0,
-      longitude: 0,
-    },
-  );
+  const [coords, setCoords] = useState<Coords>({
+    latitude: 0,
+    longitude: 0,
+  });
 
-  const setPosition = (position: {
-    coords: { latitude: number; longitude: number };
-  }) => {
+  const setPosition = (position: { coords: Coords }) => {
     setCoords({
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     const platformsWithDistances = calculateDistances(platforms, coords);
     setPlatforms(platformsWithDistances);
-  }, [coords]);
+  }, [coords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const api = new CloudsApi();

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Cloud } from "../../api/models";
 import Table from "react-bootstrap/Table";
+import orderBy from "lodash/orderBy";
+import isEqual from "lodash/isEqual";
 
 import TableRow from "./TableRow";
 import TableHeader from "./TableHeader";
 
-import orderBy from "lodash/orderBy";
-import isEqual from "lodash/isEqual";
+import { Cloud } from "../../api/models";
 
 const CloudTable = (props: { data: Array<Cloud> }) => {
   const usePrevious = <T extends unknown>(value: T): T | undefined => {
@@ -33,7 +33,7 @@ const CloudTable = (props: { data: Array<Cloud> }) => {
       setOrderedData(props.data);
       setOrderState({ name: "", order: undefined });
     }
-  }, [props.data]);
+  }, [prevData, props.data]);
 
   const { data } = props;
   const sortBy = (name: string) => {

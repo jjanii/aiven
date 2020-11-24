@@ -1,12 +1,8 @@
 import { Cloud } from "../api/models";
 
-let latitude: number = 0;
-let longitude: number = 0;
+export type Coords = { latitude: number; longitude: number };
 
-export function calculateDistances(
-  data: Array<Cloud>,
-  coords: { latitude: number; longitude: number }
-) {
+export function calculateDistances(data: Array<Cloud>, coords: Coords) {
   const { latitude, longitude } = coords;
 
   return data.map(entry => {
@@ -27,7 +23,7 @@ export function calculateDistances(
 
 function distance(lat1: number, lon1: number, lat2: number, lon2: number) {
   // from https://www.geodatasource.com/developers/javascript
-  if (lat1 == lat2 && lon1 == lon2) {
+  if (lat1 === lat2 && lon1 === lon2) {
     return 0;
   } else {
     var radlat1 = (Math.PI * lat1) / 180;
