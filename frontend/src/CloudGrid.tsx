@@ -4,6 +4,8 @@ import Table from "./components/Table/Table";
 import styled from "styled-components";
 import Select from "./components/Select/Select";
 
+import { usePlatforms } from "./helpers/usePlatforms";
+
 const providerOptions = [
   { value: "", label: "All" },
   { value: "aws", label: "AWS" },
@@ -26,22 +28,24 @@ const regionOptions = [
   { value: "southeast asia", label: "Southeast Asia" }
 ];
 
-const CloudGrid = (props: { platforms: Array<Cloud> }) => {
+const CloudGrid = () => {
+  const platforms = usePlatforms();
+
   const [filteredPlatforms, setFilteredPlatforms] = useState<Array<Cloud>>(
-    props.platforms
+    platforms
   );
   const [selectedProvider, setSelectedProvider] = useState<string>("");
   const [selectedRegion, setSelectedRegion] = useState<string>("");
 
   useEffect(() => {
-    const newFilteredPlatforms = props.platforms.filter(
+    const newFilteredPlatforms = platforms.filter(
       platform =>
         platform.cloudName.startsWith(selectedProvider) &&
         platform.geoRegion.includes(selectedRegion)
     );
 
     setFilteredPlatforms(newFilteredPlatforms);
-  }, [selectedProvider, selectedRegion, props.platforms]);
+  }, [selectedProvider, selectedRegion, platforms]);
 
   return (
     <Container>

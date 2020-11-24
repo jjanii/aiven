@@ -1,4 +1,5 @@
 #!/bin/bash
 set -exu
 
+venv/bin/pip install -r requirements.txt
 venv/bin/flask run --no-debugger

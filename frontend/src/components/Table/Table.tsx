@@ -36,7 +36,7 @@ const CloudTable = (props: { data: Array<Cloud> }) => {
   }, [prevData, props.data]);
 
   const { data } = props;
-  const sortBy = (name: string) => {
+  const sortBy = (name: string): void => {
     const order =
       orderState.name !== name
         ? "asc"

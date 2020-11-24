@@ -2,7 +2,10 @@ import { Cloud } from "../api/models";
 
 export type Coords = { latitude: number; longitude: number };
 
-export function calculateDistances(data: Array<Cloud>, coords: Coords) {
+export function calculateDistances(
+  data: Array<Cloud>,
+  coords: Coords
+): Array<Cloud> {
   const { latitude, longitude } = coords;
 
   return data.map(entry => {
@@ -21,7 +24,12 @@ export function calculateDistances(data: Array<Cloud>, coords: Coords) {
   });
 }
 
-function distance(lat1: number, lon1: number, lat2: number, lon2: number) {
+function distance(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number {
   // from https://www.geodatasource.com/developers/javascript
   if (lat1 === lat2 && lon1 === lon2) {
     return 0;
