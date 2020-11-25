@@ -5,7 +5,7 @@ import { Cloud, CloudResponse } from 'api/models';
 import Table from 'components/CloudTable/Table';
 import Select from 'components/Select/Select';
 import { SelectType } from 'components/Select/Select';
-import { FetchState } from 'helpers/useFetch';
+import { FetchState } from 'hooks/useFetch';
 
 const providerOptions: Array<SelectType> = [
   { value: '', label: 'All' },
@@ -82,7 +82,7 @@ const CloudGrid = (props: {
         )}
       {cloudsState.type !== 'loading' && coordsFetchInfo.error && (
         <p style={{ color: 'red' }}>
-          Error while trying to fetch your geo coordinates, did you accidently
+          Error while trying to fetch your geo coordinates, did you accidentally
           deny accesss for browser location info? Defaulting distances from
           Kamppi, Helsinki, Finland.
         </p>

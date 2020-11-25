@@ -7,6 +7,8 @@ import TableHeader from './TableHeader';
 
 import { Cloud } from 'api/models';
 
+import { sortByDistance } from 'helpers/sortByDistance';
+
 const CloudTable = (props: {
   data: Array<Cloud>;
   distancesToClouds: { [cloudName: string]: number };
@@ -31,6 +33,7 @@ const CloudTable = (props: {
 
   useEffect(() => {
     setSortedDistances(props.distancesToClouds);
+    setSortState({ name: '', order: undefined });
   }, [props.distancesToClouds]);
 
   const sortBy = (name: string): void => {
@@ -40,41 +43,23 @@ const CloudTable = (props: {
         : sortState.order === 'asc'
         ? 'desc'
         : sortState.order === 'desc'
-        ? undefined
+        ? 'asc'
         : 'asc';
 
-    if (order) {
-      let sortedData;
-      if (name !== 'distance') {
-        sortedData = orderBy(props.data, name, order);
-      } else {
-        // Sort key:val distances first in distances object
-        const sortedDistances = Object.fromEntries(
-          Object.entries(props.distancesToClouds).sort(([, a], [, b]) =>
-            order === 'asc' ? a - b : b - a,
-          ),
-        );
-
-        // then sort rest of the data based on the order of keys in sortedDistances
-        // key:val object
-        sortedData = props.data.sort((a, b) => {
-          if (
-            Object.keys(sortedDistances).indexOf(a.cloudName) >
-            Object.keys(sortedDistances).indexOf(b.cloudName)
-          ) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        setSortedDistances(sortedDistances);
-      }
+    if (name !== 'distance') {
+      const sortedData = orderBy(props.data, name, order);
       setSortedData(sortedData);
     } else {
-      console.log(props.distancesToClouds);
-      setSortedDistances(props.distancesToClouds);
-      setSortedData(props.data);
+      const { sortedDistances, sortedData } = sortByDistance(
+        props.data,
+        props.distancesToClouds,
+        order,
+      );
+
+      setSortedDistances(sortedDistances);
+      setSortedData(sortedData);
     }
+
     setSortState({ name, order });
   };
 
