@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Cloud } from "./api/models";
 import Table from "./components/Table/Table";
-import styled from "styled-components";
 import Select from "./components/Select/Select";
+import { SelectType } from "./components/Select/Select";
 
-const providerOptions = [
+const providerOptions: Array<SelectType> = [
   { value: "", label: "All" },
   { value: "aws", label: "AWS" },
   { value: "azure", label: "Azure" },
@@ -13,7 +13,7 @@ const providerOptions = [
   { value: "upcloud", label: "UpCloud" }
 ];
 
-const regionOptions = [
+const regionOptions: Array<SelectType> = [
   { value: "", label: "All" },
   { value: "africa", label: "Africa" },
   { value: "australia", label: "Australia" },
@@ -46,7 +46,7 @@ const CloudGrid = (props: {
   }, [selectedProvider, selectedRegion, props.platforms]);
 
   return (
-    <Container>
+    <div style={{ margin: "50px" }}>
       <Select
         title="Select Provider"
         options={providerOptions}
@@ -63,16 +63,12 @@ const CloudGrid = (props: {
         <p>
           We are still getting your geo coordinates, meanwhile distance is
           calculated from Kamppi, Helsinki. Distance will update automatically
-          when coordinates are ready.
+          once the coordinates are ready.
         </p>
       )}
       <Table data={filteredPlatforms} />
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div`
-  margin: 50px;
-`;
 
 export default CloudGrid;

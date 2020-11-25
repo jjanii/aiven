@@ -1,9 +1,11 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
+export type SelectType = { label: string; value: string };
+
 const Select = (props: {
   title?: string;
-  options: Array<{ label: string; value: string }>;
+  options: Array<SelectType>;
   onSelect: (value: string) => void;
   selected: string;
 }) => {

@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 
 const TableHeader = (props: {
   headers: Array<{ label: string; value: string }>;
@@ -9,17 +8,18 @@ const TableHeader = (props: {
     <thead>
       <tr>
         {props.headers.map(entry => (
-          <StyledTh key={entry.label} onClick={() => props.sortBy(entry.value)}>
+          <th
+            title={`Click to sort by ${entry.label}`}
+            key={entry.label}
+            onClick={() => props.sortBy(entry.value)}
+            style={{ cursor: "pointer" }}
+          >
             {entry.label}
-          </StyledTh>
+          </th>
         ))}
       </tr>
     </thead>
   );
 };
-
-const StyledTh = styled.th`
-  cursor: pointer;
-`;
 
 export default TableHeader;

@@ -53,7 +53,11 @@ const CloudTable = (props: { data: Array<Cloud> }) => {
         ]}
         sortBy={sortBy}
       />
-      <TableRow data={orderedData} />
+      <tbody>
+        {orderedData.map((entry, i) => (
+          <TableRow key={i} data={entry} />
+        ))}
+      </tbody>
     </Table>
   );
 };
