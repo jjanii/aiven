@@ -9,12 +9,16 @@ export function calculateDistances(
   const { latitude, longitude } = coords;
 
   return data.map(entry => {
-    if (latitude && longitude && entry.geoLatitude && entry.geoLongitude) {
+    if (
+      typeof entry.geoLatitude === "number" &&
+      typeof entry.geoLongitude === "number"
+    ) {
       return {
         ...entry,
         distance: distance(
-          latitude,
-          longitude,
+          // Default to Kamppi, Helsinki if we dont have coords yet
+          latitude !== 0 ? latitude : 60.168415993,
+          longitude !== 0 ? longitude : 24.9333962664,
           entry.geoLatitude,
           entry.geoLongitude
         )

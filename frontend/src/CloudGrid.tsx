@@ -4,8 +4,6 @@ import Table from "./components/Table/Table";
 import styled from "styled-components";
 import Select from "./components/Select/Select";
 
-import { usePlatforms } from "./helpers/usePlatforms";
-
 const providerOptions = [
   { value: "", label: "All" },
   { value: "aws", label: "AWS" },
@@ -23,29 +21,29 @@ const regionOptions = [
   { value: "europe", label: "Europe" },
   { value: "north america", label: "North America" },
   { value: "south america", label: "South America" },
-  { value: "north asia", label: "North Asia" },
   { value: "south asia", label: "South Asia" },
   { value: "southeast asia", label: "Southeast Asia" }
 ];
 
-const CloudGrid = () => {
-  const platforms = usePlatforms();
-
+const CloudGrid = (props: {
+  platforms: Array<Cloud>;
+  coordsFetched: boolean;
+}) => {
   const [filteredPlatforms, setFilteredPlatforms] = useState<Array<Cloud>>(
-    platforms
+    props.platforms
   );
   const [selectedProvider, setSelectedProvider] = useState<string>("");
   const [selectedRegion, setSelectedRegion] = useState<string>("");
 
   useEffect(() => {
-    const newFilteredPlatforms = platforms.filter(
+    const newFilteredPlatforms = props.platforms.filter(
       platform =>
         platform.cloudName.startsWith(selectedProvider) &&
-        platform.geoRegion.includes(selectedRegion)
+        platform.geoRegion.startsWith(selectedRegion)
     );
 
     setFilteredPlatforms(newFilteredPlatforms);
-  }, [selectedProvider, selectedRegion, platforms]);
+  }, [selectedProvider, selectedRegion, props.platforms]);
 
   return (
     <Container>
@@ -61,6 +59,13 @@ const CloudGrid = () => {
         onSelect={setSelectedRegion}
         selected={selectedRegion}
       />
+      {!props.coordsFetched && (
+        <p>
+          We are still getting your geo coordinates, meanwhile distance is
+          calculated from Kamppi, Helsinki. Distance will update automatically
+          when coordinates are ready.
+        </p>
+      )}
       <Table data={filteredPlatforms} />
     </Container>
   );

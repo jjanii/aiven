@@ -4,7 +4,7 @@ import { Cloud } from "../api/models";
 import { calculateDistances } from "./location";
 import { CloudsApi } from "../api/index";
 
-import type { Coords } from "./location";
+import { Coords } from "./location";
 
 const api = new CloudsApi();
 
@@ -32,11 +32,18 @@ export const usePlatforms = () => {
   };
 
   useEffect(() => {
-    if (cloudsState.type === 'data') {
-      const platformsWithDistances = calculateDistances(cloudsState.data.clouds, coords);
+    if (cloudsState.type === "data") {
+      const platformsWithDistances = calculateDistances(
+        cloudsState.data.clouds,
+        coords
+      );
       setPlatforms(platformsWithDistances);
     }
   }, [coords, cloudsState]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return platforms;
+  return {
+    platforms,
+    status: cloudsState.type,
+    coordsFetched: coords.latitude !== 0 && coords.longitude !== 0
+  };
 };

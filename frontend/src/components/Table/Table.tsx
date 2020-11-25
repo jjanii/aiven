@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import orderBy from "lodash/orderBy";
-import isEqual from "lodash/isEqual";
 
 import TableRow from "./TableRow";
 import TableHeader from "./TableHeader";
@@ -9,14 +8,6 @@ import TableHeader from "./TableHeader";
 import { Cloud } from "../../api/models";
 
 const CloudTable = (props: { data: Array<Cloud> }) => {
-  const usePrevious = <T extends unknown>(value: T): T | undefined => {
-    const ref = useRef<T>();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  };
-
   const [orderState, setOrderState] = useState<{
     name: string;
     order?: string;
@@ -27,15 +18,11 @@ const CloudTable = (props: { data: Array<Cloud> }) => {
 
   const [orderedData, setOrderedData] = useState<Array<Cloud>>(props.data);
 
-  const prevData = usePrevious(props.data);
   useEffect(() => {
-    if (!isEqual(prevData, props.data)) {
-      setOrderedData(props.data);
-      setOrderState({ name: "", order: undefined });
-    }
-  }, [prevData, props.data]);
+    setOrderedData(props.data);
+    setOrderState({ name: "", order: undefined });
+  }, [props.data]);
 
-  const { data } = props;
   const sortBy = (name: string): void => {
     const order =
       orderState.name !== name
@@ -47,7 +34,7 @@ const CloudTable = (props: { data: Array<Cloud> }) => {
         : "asc";
 
     if (order) {
-      const sorted = orderBy(data, name, order);
+      const sorted = orderBy(props.data, name, order);
       setOrderedData(sorted);
     } else {
       setOrderedData(props.data);
