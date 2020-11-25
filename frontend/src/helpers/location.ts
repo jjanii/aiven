@@ -1,31 +1,29 @@
 import { Cloud } from 'api/models';
 
-export type Coords = { latitude: number; longitude: number };
+export type Coords = {
+  latitude: number | undefined;
+  longitude: number | undefined;
+};
 
 export function calculateDistances(
   data: Array<Cloud>,
   coords: Coords,
-): Array<Cloud> {
+): { [cloudName: string]: number } {
   const { latitude, longitude } = coords;
 
-  return data.map(entry => {
-    if (
-      typeof entry.geoLatitude === 'number' &&
-      typeof entry.geoLongitude === 'number'
-    ) {
-      return {
-        ...entry,
-        distance: distance(
-          // Default to Kamppi, Helsinki if we dont have coords yet
-          latitude !== 0 ? latitude : 60.168415993,
-          longitude !== 0 ? longitude : 24.9333962664,
-          entry.geoLatitude,
-          entry.geoLongitude,
-        ),
-      };
-    }
-    return entry;
-  });
+  return data.reduce(
+    (obj, item) => ({
+      ...obj,
+      [item['cloudName']]: distance(
+        // Default to Kamppi, Helsinki if we dont have coords yet
+        latitude !== undefined ? latitude : 60.168415993,
+        longitude !== undefined ? longitude : 24.9333962664,
+        item.geoLatitude,
+        item.geoLongitude,
+      ),
+    }),
+    {},
+  );
 }
 
 function distance(

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-type FetchState<T, E> =
+export type FetchState<T, E> =
   | {
       type: 'loading';
     }

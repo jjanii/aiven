@@ -36,26 +36,19 @@ export interface Cloud {
    * @type {number}
    * @memberof Cloud
    */
-  geoLatitude?: number;
+  geoLatitude: number;
   /**
    *
    * @type {number}
    * @memberof Cloud
    */
-  geoLongitude?: number;
+  geoLongitude: number;
   /**
    *
    * @type {string}
    * @memberof Cloud
    */
   geoRegion: string;
-
-  /**
-   *
-   * @type {string}
-   * @memberof Cloud
-   */
-  distance?: number;
 }
 
 export function CloudFromJSON(json: any): Cloud {
