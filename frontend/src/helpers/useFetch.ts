@@ -1,29 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 type FetchState<T, E> =
   | {
-      type: "loading";
+      type: 'loading';
     }
   | {
-      type: "data";
+      type: 'data';
       data: T;
     }
   | {
-      type: "error";
+      type: 'error';
       error: E;
     };
 
 export const useFetch = <T>(promise: () => Promise<T>) => {
   const [fetchState, setFetchState] = useState<FetchState<T, Error>>({
-    type: "loading"
+    type: 'loading',
   });
   useEffect(() => {
     promise()
       .then(x => {
-        setFetchState({ type: "data", data: x });
+        setFetchState({ type: 'data', data: x });
       })
       .catch(e => {
-        setFetchState({ type: "error", error: e });
+        setFetchState({ type: 'error', error: e });
       });
     return;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

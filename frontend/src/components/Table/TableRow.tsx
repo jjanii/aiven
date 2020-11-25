@@ -1,6 +1,6 @@
-import React from "react";
-import { Cloud } from "../../api/models";
-import capitalize from "lodash/capitalize";
+import React from 'react';
+import { Cloud } from 'api/models';
+import capitalize from 'lodash/capitalize';
 
 const TableRow = (props: { data: Cloud }) => {
   const { data } = props;

@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { useFetch } from "./useFetch";
-import { Cloud } from "../api/models";
-import { calculateDistances } from "./location";
-import { CloudsApi } from "../api/index";
+import { useState, useEffect } from 'react';
+import { useFetch } from './useFetch';
+import { Cloud } from 'api/models';
+import { calculateDistances } from 'helpers/location';
+import { CloudsApi } from 'api/index';
 
-import { Coords } from "./location";
+import { Coords } from './location';
 
 const api = new CloudsApi();
 
@@ -12,7 +12,7 @@ export const usePlatforms = () => {
   const [platforms, setPlatforms] = useState<Array<Cloud>>([]);
   const [coords, setCoords] = useState<Coords>({
     latitude: 0,
-    longitude: 0
+    longitude: 0,
   });
 
   const cloudsState = useFetch(() =>
@@ -21,21 +21,21 @@ export const usePlatforms = () => {
         navigator.geolocation.getCurrentPosition(setPosition, console.log);
       }
       return data;
-    })
+    }),
   );
 
   const setPosition = (position: { coords: Coords }) => {
     setCoords({
       latitude: position.coords.latitude,
-      longitude: position.coords.longitude
+      longitude: position.coords.longitude,
     });
   };
 
   useEffect(() => {
-    if (cloudsState.type === "data") {
+    if (cloudsState.type === 'data') {
       const platformsWithDistances = calculateDistances(
         cloudsState.data.clouds,
-        coords
+        coords,
       );
       setPlatforms(platformsWithDistances);
     }
@@ -44,6 +44,6 @@ export const usePlatforms = () => {
   return {
     platforms,
     status: cloudsState.type,
-    coordsFetched: coords.latitude !== 0 && coords.longitude !== 0
+    coordsFetched: coords.latitude !== 0 && coords.longitude !== 0,
   };
 };
