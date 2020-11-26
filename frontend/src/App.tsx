@@ -1,6 +1,6 @@
 import React from 'react';
 import CloudGrid from 'components/CloudGrid';
-import { usePlatforms } from 'helpers/usePlatforms';
+import { usePlatforms } from 'hooks/usePlatforms';
 
 import './App.css';
 

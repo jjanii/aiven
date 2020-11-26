@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
 import orderBy from 'lodash/orderBy';
 
-import TableRow from './TableRow';
-import TableHeader from './TableHeader';
+import Table from 'components/table/Table';
+import TableRow from 'components/table/TableRow';
+import TableHeader from 'components/table/TableHeader';
 
 import { Cloud } from 'api/models';
 
@@ -64,7 +64,7 @@ const CloudTable = (props: {
   };
 
   return (
-    <Table striped bordered hover>
+    <Table>
       <TableHeader
         headers={[
           { label: 'Cloud name', value: 'cloudName' },

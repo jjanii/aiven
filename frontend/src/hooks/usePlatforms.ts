@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useFetch } from 'hooks/useFetch';
-import { calculateDistances } from 'helpers/location';
+import { Coords, calculateDistances } from 'helpers/location';
 import { CloudsApi } from 'api/index';
-
-import { Coords } from './location';
 
 const api = new CloudsApi();
 

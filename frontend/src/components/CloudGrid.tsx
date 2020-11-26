@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { Cloud, CloudResponse } from 'api/models';
-import Table from 'components/CloudTable/Table';
-import Select from 'components/Select/Select';
-import { SelectType } from 'components/Select/Select';
+import CloudTable from 'components/CloudTable';
+import Select from 'components/select/Select';
+import { SelectType } from 'components/select/Select';
 import { FetchState } from 'hooks/useFetch';
 
 const providerOptions: Array<SelectType> = [
@@ -84,7 +84,7 @@ const CloudGrid = (props: {
             automatically once the coordinates are ready.
           </p>
         )}
-      {cloudsState.type !== 'loading' && coordsFetchInfo.error && (
+      {coordsFetchInfo.error && (
         <p style={{ color: 'red' }}>
           Error while trying to fetch your geo coordinates. Reason:{' '}
           <i>
@@ -97,7 +97,10 @@ const CloudGrid = (props: {
         <Spinner animation="border" style={{ width: '5rem', height: '5rem' }} />
       )}
       {cloudsState.type === 'data' && (
-        <Table data={filteredPlatforms} distancesToClouds={distancesToClouds} />
+        <CloudTable
+          data={filteredPlatforms}
+          distancesToClouds={distancesToClouds}
+        />
       )}
       {cloudsState.type === 'error' && (
         <p style={{ color: 'red' }}>{cloudsState.error}</p>
