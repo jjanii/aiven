@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jjanii.github.io/aiven",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
@@ -28,7 +29,10 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "prettier:base": "prettier --parser typescript --single-quote",
     "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
-    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\""
+    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -50,8 +54,9 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.165",
-    "eslint-config-prettier": "^6.5.0",
+    "cypress": "^6.0.0",
     "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-flowtype": "^4.3.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",

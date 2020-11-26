@@ -31,7 +31,11 @@ const regionOptions: Array<SelectType> = [
 const CloudGrid = (props: {
   cloudsState: FetchState<CloudResponse, Error>;
   distancesToClouds: { [cloudName: string]: number };
-  coordsFetchInfo: { coordsFetched: boolean; error: boolean };
+  coordsFetchInfo: {
+    coordsFetched: boolean;
+    error: boolean;
+    errorMsg?: string;
+  };
 }) => {
   const { cloudsState, distancesToClouds, coordsFetchInfo } = props;
 
@@ -74,7 +78,7 @@ const CloudGrid = (props: {
       {cloudsState.type !== 'loading' &&
         !coordsFetchInfo.coordsFetched &&
         !coordsFetchInfo.error && (
-          <p>
+          <p data-cy="loadingCoords">
             We are still getting your geo coordinates, meanwhile distances are
             calculated from Kamppi, Helsinki. Distances will update
             automatically once the coordinates are ready.
@@ -82,9 +86,11 @@ const CloudGrid = (props: {
         )}
       {cloudsState.type !== 'loading' && coordsFetchInfo.error && (
         <p style={{ color: 'red' }}>
-          Error while trying to fetch your geo coordinates, did you accidentally
-          deny accesss for browser location info? Defaulting distances from
-          Kamppi, Helsinki, Finland.
+          Error while trying to fetch your geo coordinates. Reason:{' '}
+          <i>
+            {coordsFetchInfo.errorMsg !== undefined && coordsFetchInfo.errorMsg}
+          </i>
+          . Defaulting distances from Kamppi, Helsinki, Finland.
         </p>
       )}
       {cloudsState.type === 'loading' && (

@@ -14,13 +14,15 @@ export const usePlatforms = () => {
   const [coordsState, setCoordsState] = useState<{
     coords: { latitude: number | undefined; longitude: number | undefined };
     error: boolean;
+    errorMsg?: string;
   }>({
     coords: { latitude: undefined, longitude: undefined },
     error: false,
+    errorMsg: undefined,
   });
 
-  const setPositionError = () => {
-    setCoordsState(s => ({ ...s, error: true }));
+  const setPositionError = (e: GeolocationPositionError) => {
+    setCoordsState(s => ({ ...s, error: true, errorMsg: e.message }));
   };
 
   const cloudsState = useFetch(() =>
@@ -57,6 +59,7 @@ export const usePlatforms = () => {
       coordsState.coords.latitude !== undefined &&
       coordsState.coords.longitude !== undefined,
     error: coordsState.error,
+    errorMsg: coordsState.errorMsg,
   };
 
   return {

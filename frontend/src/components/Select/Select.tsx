@@ -15,6 +15,7 @@ const Select = (props: {
       {title && <Form.Label>{title}</Form.Label>}
       <Form.Control
         as="select"
+        data-cy="select"
         value={selected}
         onChange={e => onSelect(e.target.value)}
       >
