@@ -40,8 +40,6 @@ const CloudTable = (props: {
         ? 'asc'
         : sortState.order === 'asc'
         ? 'desc'
-        : sortState.order === 'desc'
-        ? 'asc'
         : 'asc';
 
     if (name !== 'distance') {
@@ -75,6 +73,7 @@ const CloudTable = (props: {
 
   return (
     <Table
+      dataCy="cloudTable"
       headers={[
         { label: 'Cloud name', value: 'cloudName' },
         { label: 'Cloud Description', value: 'cloudDescription' },

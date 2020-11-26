@@ -41,5 +41,8 @@ jobs:
       - name: Run the tests and generate coverage report
         run: npm test -- --coverage
 
+      - name: Cypress.io
+        uses: cypress-io/github-action@v2.6.1
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1

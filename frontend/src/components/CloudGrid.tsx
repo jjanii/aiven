@@ -79,14 +79,14 @@ const CloudGrid = (props: {
         !coordsFetchInfo.coordsFetched &&
         !coordsFetchInfo.error && (
           <p data-cy="loadingCoords">
-            We are still getting your geo coordinates, meanwhile distances are
+            We are still getting your geoloation, meanwhile distances are
             calculated from Kamppi, Helsinki. Distances will update
             automatically once the coordinates are ready.
           </p>
         )}
       {coordsFetchInfo.error && (
         <p style={{ color: 'red' }}>
-          Error while trying to fetch your geo coordinates. Reason:{' '}
+          Error while trying to fetch your geolocation. Reason:{' '}
           <i>
             {coordsFetchInfo.errorMsg !== undefined && coordsFetchInfo.errorMsg}
           </i>
