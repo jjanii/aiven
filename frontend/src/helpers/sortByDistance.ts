@@ -4,7 +4,10 @@ export const sortByDistance = (
   data: Array<Cloud>,
   distancesToClouds: { [cloudName: string]: number },
   order: string,
-) => {
+): {
+  sortedDistances: { [cloudName: string]: number };
+  sortedData: Array<Cloud>;
+} => {
   // Sort key:val distances first in distances object
   const sortedDistances = Object.fromEntries(
     Object.entries(distancesToClouds).sort(([, a], [, b]) =>
