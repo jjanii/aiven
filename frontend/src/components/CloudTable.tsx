@@ -69,6 +69,10 @@ const CloudTable = (props: {
       sortedDistances[rowData.cloudName],
     ];
   };
+
+  const getRowKey = (rowIndex: number): string =>
+    sortedData[rowIndex].cloudName;
+
   return (
     <Table
       headers={[
@@ -80,6 +84,7 @@ const CloudTable = (props: {
       sortBy={sortBy}
       rows={sortedData}
       rowRenderer={cloudRowRenderer}
+      getRowKey={getRowKey}
     />
   );
 };

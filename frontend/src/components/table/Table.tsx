@@ -1,12 +1,15 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 
-const GenericTable = (props: {
+type Props<T> = {
   headers: Array<{ label: string; value: string }>;
   rows: Array<T>;
   rowRenderer: (row: T) => Array<string | number>;
+  getRowKey: (rowIndex: number) => string;
   sortBy: (key: string) => void;
-}) => {
+};
+
+const GenericTable = <T,>(props: Props<T>) => {
   return (
     <Table striped bordered hover>
       <thead>
@@ -25,7 +28,7 @@ const GenericTable = (props: {
       </thead>
       <tbody>
         {props.rows.map((row, rowIndex) => (
-          <tr data-cy="TableRow" key={rowIndex}>
+          <tr data-cy="TableRow" key={props.getRowKey(rowIndex)}>
             {props.rowRenderer(row).map(cell => (
               <td key={cell}>{cell}</td>
             ))}
