@@ -1,13 +1,11 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 
-import { Cloud } from 'api/models';
-
 const GenericTable = (props: {
   headers: Array<{ label: string; value: string }>;
-  rows: Array<Cloud>;
-  rowRenderer: (arg0: Cloud) => Array<string | number>;
-  sortBy: (arg0: string) => void;
+  rows: Array<T>;
+  rowRenderer: (row: T) => Array<string | number>;
+  sortBy: (key: string) => void;
 }) => {
   return (
     <Table striped bordered hover>
