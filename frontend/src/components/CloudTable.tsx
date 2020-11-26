@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import orderBy from 'lodash/orderBy';
 
 import Table from 'components/table/Table';
-import TableRow from 'components/table/TableRow';
-import TableHeader from 'components/table/TableHeader';
 
 import { Cloud } from 'api/models';
 
@@ -63,31 +61,26 @@ const CloudTable = (props: {
     setSortState({ name, order });
   };
 
+  const cloudRowRenderer = (rowData: Cloud): Array<string | number> => {
+    return [
+      rowData.cloudName,
+      rowData.cloudDescription || '',
+      rowData.geoRegion,
+      sortedDistances[rowData.cloudName],
+    ];
+  };
   return (
-    <Table>
-      <TableHeader
-        headers={[
-          { label: 'Cloud name', value: 'cloudName' },
-          { label: 'Cloud Description', value: 'cloudDescription' },
-          { label: 'Region', value: 'geoRegion' },
-          { label: 'Distance (km)', value: 'distance' },
-        ]}
-        sortBy={sortBy}
-      />
-      <tbody>
-        {sortedData.map((entry, i) => (
-          <TableRow
-            key={i}
-            data={[
-              entry.cloudName,
-              entry.cloudDescription || '',
-              entry.geoRegion,
-              sortedDistances[entry.cloudName],
-            ]}
-          />
-        ))}
-      </tbody>
-    </Table>
+    <Table
+      headers={[
+        { label: 'Cloud name', value: 'cloudName' },
+        { label: 'Cloud Description', value: 'cloudDescription' },
+        { label: 'Region', value: 'geoRegion' },
+        { label: 'Distance (km)', value: 'distance' },
+      ]}
+      sortBy={sortBy}
+      rows={sortedData}
+      rowRenderer={cloudRowRenderer}
+    />
   );
 };
 
