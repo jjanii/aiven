@@ -75,7 +75,7 @@ const CloudGrid = (props: {
         onSelect={setSelectedRegion}
         selected={selectedRegion}
       />
-      {cloudsState.type !== 'loading' &&
+      {cloudsState.type === 'data' &&
         !coordsFetchInfo.coordsFetched &&
         !coordsFetchInfo.error && (
           <p data-cy="loadingCoords">

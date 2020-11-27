@@ -1,5 +1,5 @@
 import http.client
-from flask import Flask
+from flask import Flask, jsonify
 from flask_caching import Cache
 from flask_cors import CORS, cross_origin
 
@@ -21,6 +21,9 @@ def get_cloud_platforms():
     conn.request("GET", "/v1/clouds")
 
     res = conn.getresponse()
-    data = res.read()
+    if res.status == 200:
+        data = res.read()
 
-    return data
+        return data
+
+    return jsonify({"Failed to fetch"}), 400

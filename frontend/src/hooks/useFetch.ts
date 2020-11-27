@@ -23,7 +23,7 @@ export const useFetch = <T>(promise: () => Promise<T>) => {
         setFetchState({ type: 'data', data: x });
       })
       .catch(e => {
-        setFetchState({ type: 'error', error: e });
+        setFetchState({ type: 'error', error: e.message });
       });
     return;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
