@@ -3,7 +3,6 @@ import { useFetch } from 'hooks/useFetch';
 import { Coords, calculateDistances } from 'helpers/location';
 import { CloudsApi } from 'api/index';
 import { FetchState } from 'hooks/useFetch';
-const api = new CloudsApi();
 
 type CoordsState = {
   coords: { latitude: number | undefined; longitude: number | undefined };
