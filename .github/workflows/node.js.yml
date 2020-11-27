@@ -44,10 +44,10 @@ jobs:
       - name: Build the app
         run: npm run build
 
-      - name: Start the app
-        run: npm run start
+      - name: Start server in the background
+        run: npm start &
 
-      - name: Run cypress tests
+      - name: Install Cypress and run tests
         run: npm run cypress
 
       - name: Upload coverage to Codecov

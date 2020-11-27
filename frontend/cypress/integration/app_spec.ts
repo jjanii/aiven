@@ -12,10 +12,6 @@ describe('Cloud platform tests', () => {
       .should('be.gt', 80);
   });
 
-  it('has "we are still getting your coords text" visible', () => {
-    cy.get(`[data-cy="loadingCoords"]`).should('exist');
-  });
-
   it('selecting AWS as provider only shows cloud platforms provided by them', () => {
     cy.get('[data-cy="select"]')
       .first()
