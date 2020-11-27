@@ -2,10 +2,26 @@ import { useState, useEffect } from 'react';
 import { useFetch } from 'hooks/useFetch';
 import { Coords, calculateDistances } from 'helpers/location';
 import { CloudsApi } from 'api/index';
+import { FetchState } from 'hooks/useFetch';
+const api = new CloudsApi();
+
+type CoordsState = {
+  coords: { latitude: number | undefined; longitude: number | undefined };
+  error: boolean;
+  errorMsg?: string;
+};
+type DistanceToCloudMap = {
+  [cloudName: string]: number;
+};
+type UsePlatFromsType = {
+  cloudState: FetchState;
+  distancesToClouds: DistanceToCloudMap;
+  coordsFetchInfo: CoordsState;
+};
 
 const api = new CloudsApi();
 
-export const usePlatforms = () => {
+export const usePlatforms = (): UsePlatFromsType => {
   const [distancesToClouds, setDistancesToClouds] = useState<{
     [cloudName: string]: number;
   }>({});
@@ -50,7 +66,7 @@ export const usePlatforms = () => {
       );
       setDistancesToClouds(distancesToClouds);
     }
-  }, [coordsState, cloudsState]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [coordsState, cloudsState]);
 
   const coordsFetchInfo = {
     coordsFetched:

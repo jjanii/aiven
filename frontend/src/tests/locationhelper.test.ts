@@ -33,7 +33,7 @@ describe('Location helper', () => {
       longitude: true,
     });
 
-    Object.entries(result).forEach((entry, i) => expect(entry[1]).toEqual(NaN));
+    Object.entries(result).forEach(entry => expect(entry[1]).toEqual(NaN));
   });
 
   test('Returns key:val pairs of cloud names and distances for each input', () => {

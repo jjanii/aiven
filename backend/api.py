@@ -12,5 +12,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route('/clouds')
 @cross_origin()
 def get_cloud_platforms():
+    """ Get Aiven's cloud platforms from api.aiven.io/v1/clouds """
     data = get_cached_clouds()
     return data

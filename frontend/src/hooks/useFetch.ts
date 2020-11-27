@@ -13,7 +13,9 @@ export type FetchState<T, E> =
       error: E;
     };
 
-export const useFetch = <T>(promise: () => Promise<T>) => {
+export const useFetch = <T>(
+  promise: () => Promise<T>,
+): FetchState<T, Error> => {
   const [fetchState, setFetchState] = useState<FetchState<T, Error>>({
     type: 'loading',
   });
@@ -26,6 +28,6 @@ export const useFetch = <T>(promise: () => Promise<T>) => {
         setFetchState({ type: 'error', error: e.message });
       });
     return;
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
   return fetchState;
 };

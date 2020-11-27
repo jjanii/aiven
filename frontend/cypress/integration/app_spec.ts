@@ -62,7 +62,7 @@ describe('Cloud platform tests', () => {
     cy.get('[data-cy="tableRow"]')
       .find('td:last-child')
       // this one from https://stackoverflow.com/questions/57077997/how-do-i-iterate-through-a-table-and-extract-the-values-from-a-row-and-compare-w
-      .each(($el, $index) => {
+      .each($el => {
         return cy
           .wrap($el)
           .invoke('text')
@@ -86,7 +86,7 @@ describe('Cloud platform tests', () => {
     cy.contains('Distance (km)').click();
     cy.get('[data-cy="tableRow"]')
       .find('td:last-child')
-      .each(($el, $index) => {
+      .each($el => {
         return cy
           .wrap($el)
           .invoke('text')

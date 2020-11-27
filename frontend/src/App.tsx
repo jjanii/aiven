@@ -4,7 +4,7 @@ import { usePlatforms } from 'hooks/usePlatforms';
 
 import './App.css';
 
-function App() {
+function App(): React.FC<Props> {
   const { cloudsState, distancesToClouds, coordsFetchInfo } = usePlatforms();
 
   return (

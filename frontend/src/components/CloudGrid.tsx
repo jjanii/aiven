@@ -36,7 +36,7 @@ const CloudGrid = (props: {
     error: boolean;
     errorMsg?: string;
   };
-}) => {
+}): React.FC<Props> => {
   const { cloudsState, distancesToClouds, coordsFetchInfo } = props;
 
   const [filteredPlatforms, setFilteredPlatforms] = useState<Array<Cloud>>([]);
