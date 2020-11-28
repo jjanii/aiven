@@ -32,18 +32,6 @@ export interface CloudResponse {
      * @memberof CloudResponse
      */
     clouds: Array<Cloud>;
-    /**
-     * 
-     * @type {Array<Error>}
-     * @memberof CloudResponse
-     */
-    errors?: Array<Error>;
-    /**
-     * 
-     * @type {string}
-     * @memberof CloudResponse
-     */
-    message?: string;
 }
 
 export function CloudResponseFromJSON(json: any): CloudResponse {
@@ -57,8 +45,6 @@ export function CloudResponseFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'clouds': ((json['clouds'] as Array<any>).map(CloudFromJSON)),
-        'errors': !exists(json, 'errors') ? undefined : json['errors'],
-        'message': !exists(json, 'message') ? undefined : json['message'],
     };
 }
 
@@ -72,8 +58,6 @@ export function CloudResponseToJSON(value?: CloudResponse | null): any {
     return {
         
         'clouds': ((value.clouds as Array<any>).map(CloudToJSON)),
-        'errors': value.errors,
-        'message': value.message,
     };
 }
 
