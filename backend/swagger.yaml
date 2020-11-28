@@ -33,6 +33,8 @@ definitions:
     required:
       - cloud_name
       - geo_region
+      - geo_latitude
+      - geo_longitude
     properties:
       cloud_name:
         type: string

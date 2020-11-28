@@ -1,4 +1,3 @@
-.openapi-generator-ignore
 apis/CloudsApi.ts
 apis/index.ts
 index.ts

@@ -36,13 +36,13 @@ export interface Cloud {
      * @type {number}
      * @memberof Cloud
      */
-    geoLatitude?: number;
+    geoLatitude: number;
     /**
      * 
      * @type {number}
      * @memberof Cloud
      */
-    geoLongitude?: number;
+    geoLongitude: number;
     /**
      * 
      * @type {string}
@@ -63,8 +63,8 @@ export function CloudFromJSONTyped(json: any, ignoreDiscriminator: boolean): Clo
         
         'cloudName': json['cloud_name'],
         'cloudDescription': !exists(json, 'cloud_description') ? undefined : json['cloud_description'],
-        'geoLatitude': !exists(json, 'geo_latitude') ? undefined : json['geo_latitude'],
-        'geoLongitude': !exists(json, 'geo_longitude') ? undefined : json['geo_longitude'],
+        'geoLatitude': json['geo_latitude'],
+        'geoLongitude': json['geo_longitude'],
         'geoRegion': json['geo_region'],
     };
 }
