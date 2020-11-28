@@ -23,7 +23,7 @@ type UsePlatFormsType = {
 
 const api = new CloudsApi();
 
-export const usePlatforms = (): UsePlatFormsType<CloudResponse> => {
+export const usePlatforms = (): UsePlatFormsType => {
   const [distancesToClouds, setDistancesToClouds] = useState<{
     [cloudName: string]: number;
   }>({});
