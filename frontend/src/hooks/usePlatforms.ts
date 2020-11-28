@@ -3,24 +3,27 @@ import { useFetch } from 'hooks/useFetch';
 import { Coords, calculateDistances } from 'helpers/location';
 import { CloudsApi } from 'api/index';
 import { FetchState } from 'hooks/useFetch';
+import { CloudResponse } from 'api/models';
 
-type CoordsState = {
-  coords: { latitude: number | undefined; longitude: number | undefined };
-  error: boolean;
-  errorMsg?: string;
-};
 type DistanceToCloudMap = {
   [cloudName: string]: number;
 };
-type UsePlatFromsType = {
-  cloudState: FetchState;
+
+export type CoordsFetchInfo = {
+  coordsFetched: boolean;
+  error?: boolean;
+  errorMsg?: string;
+};
+
+type UsePlatFormsType = {
+  cloudsState: FetchState<CloudResponse, Error>;
   distancesToClouds: DistanceToCloudMap;
-  coordsFetchInfo: CoordsState;
+  coordsFetchInfo: CoordsFetchInfo;
 };
 
 const api = new CloudsApi();
 
-export const usePlatforms = (): UsePlatFromsType => {
+export const usePlatforms = (): UsePlatFormsType<CloudResponse> => {
   const [distancesToClouds, setDistancesToClouds] = useState<{
     [cloudName: string]: number;
   }>({});
@@ -67,7 +70,11 @@ export const usePlatforms = (): UsePlatFromsType => {
     }
   }, [coordsState, cloudsState]);
 
-  const coordsFetchInfo = {
+  const coordsFetchInfo: {
+    coordsFetched: boolean;
+    error?: boolean;
+    errorMsg?: string;
+  } = {
     coordsFetched:
       coordsState.coords.latitude !== undefined &&
       coordsState.coords.longitude !== undefined,

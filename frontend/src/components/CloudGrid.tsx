@@ -6,6 +6,7 @@ import CloudTable from 'components/CloudTable';
 import Select from 'components/select/Select';
 import { SelectType } from 'components/select/Select';
 import { FetchState } from 'hooks/useFetch';
+import { CoordsFetchInfo } from 'hooks/usePlatforms';
 
 const providerOptions: Array<SelectType> = [
   { value: '', label: 'All' },
@@ -31,12 +32,8 @@ const regionOptions: Array<SelectType> = [
 const CloudGrid = (props: {
   cloudsState: FetchState<CloudResponse, Error>;
   distancesToClouds: { [cloudName: string]: number };
-  coordsFetchInfo: {
-    coordsFetched: boolean;
-    error: boolean;
-    errorMsg?: string;
-  };
-}): React.FC<Props> => {
+  coordsFetchInfo: CoordsFetchInfo;
+}): JSX.Element => {
   const { cloudsState, distancesToClouds, coordsFetchInfo } = props;
 
   const [filteredPlatforms, setFilteredPlatforms] = useState<Array<Cloud>>([]);
@@ -75,15 +72,13 @@ const CloudGrid = (props: {
         onSelect={setSelectedRegion}
         selected={selectedRegion}
       />
-      {cloudsState.type === 'data' &&
-        !coordsFetchInfo.coordsFetched &&
-        !coordsFetchInfo.error && (
-          <p data-cy="loadingCoords">
-            We are still getting your geoloation, meanwhile distances are
-            calculated from Kamppi, Helsinki. Distances will update
-            automatically once the coordinates are ready.
-          </p>
-        )}
+      {!coordsFetchInfo.coordsFetched && !coordsFetchInfo.error && (
+        <p data-cy="loadingCoords">
+          We are still getting your geoloation, meanwhile distances are
+          calculated from Kamppi, Helsinki. Distances will update automatically
+          once the coordinates are ready.
+        </p>
+      )}
       {coordsFetchInfo.error && (
         <p style={{ color: 'red' }}>
           Error while trying to fetch your geolocation. Reason:{' '}

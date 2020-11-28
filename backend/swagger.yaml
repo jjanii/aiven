@@ -64,10 +64,6 @@ definitions:
         type: string
       more_info:
         type: string
-  Errors:
-    type: array
-    items:
-      $ref: "#/definitions/Error"
   CloudResponse:
     type: "object"
     required:
@@ -76,8 +72,3 @@ definitions:
       clouds:
         type: object
         $ref: "#/definitions/Clouds"
-      errors:
-        type: object
-        $ref: "#/definitions/Errors"
-      message:
-        type: string

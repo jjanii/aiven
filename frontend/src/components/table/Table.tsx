@@ -10,7 +10,7 @@ type Props<T> = {
   sortBy: (key: string) => void;
 };
 
-const GenericTable = <T,>(props: Props<T>): React.FC<Props> => {
+const GenericTable = <T,>(props: Props<T>): JSX.Element => {
   return (
     <Table data-cy={props.dataCy} striped bordered hover>
       <thead>

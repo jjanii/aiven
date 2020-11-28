@@ -10,7 +10,7 @@ import { sortByDistance } from 'helpers/sortByDistance';
 const CloudTable = (props: {
   data: Array<Cloud>;
   distancesToClouds: { [cloudName: string]: number };
-}): React.FC<Props> => {
+}): JSX.Element => {
   const [sortState, setSortState] = useState<{
     name: string;
     order?: string;

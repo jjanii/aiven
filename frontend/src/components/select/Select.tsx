@@ -8,7 +8,7 @@ const Select = (props: {
   options: Array<SelectType>;
   onSelect: (value: string) => void;
   selected: string;
-}): React.FC<Props> => {
+}): JSX.Element => {
   const { title, options, onSelect, selected } = props;
   return (
     <Form.Group>
