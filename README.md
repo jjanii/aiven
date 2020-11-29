@@ -1,4 +1,41 @@
-## Running the app for development
+## General Information
+
+## API
+
+The API for frontend is automatically generated based by the `./backend/swagger.yaml` file. It helps us to be on track with correct types all the time.
+Once an endpoint is created/modified/deleted, just make the same changes to `swagger.yaml` and on root folder (`./aiven`) run
+
+```shell
+docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
+    -i /local/backend/swagger.yaml \
+    -g typescript-fetch \
+    -o /local/frontend/src/api/ \
+    --additional-properties=typescriptThreePlus=true
+```
+
+## Testing
+
+We have some jest unit tests and also cypress tests. (Note: run these in `./frontend`)
+
+To run cypress tests run
+
+```shell
+npm run cypress
+```
+
+or to open the cypress window and see what the tests actually do, run
+
+```shell
+npm run cypress:open
+```
+
+Basic jest tests can be ran with
+
+```shell
+npm run test
+```
+
+## Running the app
 
 ### Backend
 
